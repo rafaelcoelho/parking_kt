@@ -24,7 +24,26 @@ class ParkingTest {
     fun `The parking is open after 9 o'clock`() {
         assertTrue(
                 parking.isOpen(Calendar.getInstance().also { it.setTime(fmt.parse("2022-06-01T09:00:01"))}),
+                "Should be open"
+            )
+    }
+
+    @Test
+    fun `The parking is closed after 17 o'clock`() {
+        assertFalse(
+                parking.isOpen(Calendar.getInstance().also { it.setTime(fmt.parse("2022-06-01T17:00:01"))}),
                 "Should be closed"
+            )
+    }
+
+    fun `Parking a car should park`() {
+        val car = Car("ABC-1234")
+
+        parking.park(car)
+
+        assertTrue(
+                parking.isCarParked(car),
+                "The should be parked"
             )
     }
 }

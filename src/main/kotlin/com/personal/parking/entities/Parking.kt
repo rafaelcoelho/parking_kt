@@ -19,7 +19,7 @@ class Parking (
     }
 
 
-    fun parking(car: Car) {
+    fun park(car: Car) {
         if (parkedCars.containsKey(car.plate)) {
             throw RuntimeException("The car is with plate ${car.plate} is already parked")
         }
