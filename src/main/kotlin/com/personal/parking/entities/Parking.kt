@@ -19,6 +19,8 @@ class Parking(
     fun checking(car: Car, checkingDate: Calendar): Ticket {
         if (parkedCars.containsKey(car.plate) || !isOpen(checkingDate)) {
             throw RuntimeException("The car is with plate ${car.plate} is already parked")
+        } else if (capacity == parkedCars.size) {
+            throw RuntimeException("The parking is full")
         }
 
         val ticket = Ticket(checkingDate, car)

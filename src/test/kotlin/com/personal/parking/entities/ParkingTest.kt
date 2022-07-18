@@ -1,5 +1,6 @@
 package com.personal.parking.entities
 
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import java.util.Calendar
 import java.text.SimpleDateFormat
@@ -63,5 +64,39 @@ class ParkingTest {
             parking.isCarParked(car),
             "The car should not be in the parking"
         )
+    }
+
+    @Test
+    fun `Parking full should throws exception to park`() {
+        val fullParking = Parking(0, openFrom, closedFrom)
+
+        val exception = Assertions.assertThrows(
+            java.lang.RuntimeException::class.java
+        ) { fullParking.checking(Car("ABC-9988"), dateSupplier("2022-06-01T12:00:00")) }
+
+        Assertions.assertEquals("The parking is full", exception.message)
+    }
+
+    @Test
+    fun `Park a car get full parking if try to park a new car should throws exception to park`() {
+        val fullParking = Parking(1, openFrom, closedFrom)
+        fullParking.checking(Car("ABC-9988"), dateSupplier("2022-06-01T12:00:00"))
+
+        val exception = Assertions.assertThrows(
+            java.lang.RuntimeException::class.java
+        ) { fullParking.checking(Car("ABC-0088"), dateSupplier("2022-06-01T15:00:00")) }
+
+        Assertions.assertEquals("The parking is full", exception.message)
+    }
+
+    @Test
+    fun `Unpark a car from full parking and park a new car should success`() {
+        val fullParking = Parking(1, openFrom, closedFrom)
+        fullParking.checking(Car("ABC-9988"), dateSupplier("2022-06-01T12:00:00")).let { it ->
+            it.close(dateSupplier("2022-06-01T15:00:00"))
+                .let { fullParking.checkout(it.pay()) }
+        }
+
+        Assertions.assertDoesNotThrow { fullParking.checking(Car("ABC-0088"), dateSupplier("2022-06-01T15:00:00")) }
     }
 }
