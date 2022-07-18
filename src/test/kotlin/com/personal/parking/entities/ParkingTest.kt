@@ -6,7 +6,7 @@ import java.util.Calendar
 import java.text.SimpleDateFormat
 import kotlin.test.*
 
-class ParkingTest {
+internal class ParkingTest {
     private val fmt = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
     private val openFrom: Calendar = Calendar.getInstance().also { it.time = fmt.parse("2022-06-01T09:00:00") }
     private val closedFrom: Calendar = Calendar.getInstance().also { it.time = fmt.parse("2022-06-01T17:00:00") }
