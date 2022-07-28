@@ -1,7 +1,8 @@
 package com.personal.parking.usecase
 
 import com.personal.parking.entities.Parking
-import com.personal.parking.repository.ParkingRepository
+import com.personal.parking.entities.Ticket
+import com.personal.parking.usecase.ports.ParkingRepository
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
@@ -19,6 +20,9 @@ internal class ParkingUseCaseTest {
         override fun getById(parkingId: String): Parking? {
             if (parkingId == "123") return parking
             return null
+        }
+
+        override fun addCar(parkingId: String, capacity: Int, ticket: Ticket) {
         }
     }
     private val parkUS = ParkingUseCase(repository)
