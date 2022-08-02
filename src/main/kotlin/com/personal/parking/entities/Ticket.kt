@@ -12,10 +12,10 @@ open class Ticket(
 
     inner class TicketOpen (
             private val ticket: Ticket,
-            private val checkout: Calendar
+            checkout: Calendar
         ) {
         private val period : Long = checkout.timeInMillis - checking.timeInMillis
-        val total : Double = period * 10.0
+        val total : Double = (period/(1000*60*60)) * 10.0
 
         fun pay(): TicketClosed {
             ticket.isPaid = true
